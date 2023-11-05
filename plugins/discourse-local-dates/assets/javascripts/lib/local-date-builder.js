@@ -4,7 +4,7 @@ import { renderIcon } from "discourse-common/lib/icon-library";
 
 const DATETIME_FORMAT = "LLL";
 const DATE_FORMAT = "LL";
-const FULL_DATETIME_FORMAT = "LLLL";
+const FULL_DATETIME_FORMAT = "jYYYY/jMM/jDD HH:mm";
 const TIME_FORMAT = "h:mm A";
 const DAY_OF_THE_WEEK_FORMAT = "dddd";
 const RANGE_SEPARATOR = "→";

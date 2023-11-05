@@ -1,7 +1,6 @@
 /* global Pikaday:true */
 import { isEmpty } from "@ember/utils";
 import Component from "@glimmer/component";
-import I18n from "I18n";
 import loadScript from "discourse/lib/load-script";
 import { Promise } from "rsvp";
 import { tracked } from "@glimmer/tracking";
@@ -84,17 +83,39 @@ export default class CalendarDateTimeInput extends Component {
             `#picker-container-${this.args.datePickerId}`
           ),
           bound: false,
-          format: "YYYY-MM-DD",
-          reposition: false,
-          firstDay: 1,
-          setDefaultDate: true,
-          keyboardInput: false,
+          format: "jYYYY-jMM-jDD",
+          // reposition: false,
+          firstDay: 0,
+          // setDefaultDate: true,
+          // keyboardInput: false,
+          isRTL: true,
           i18n: {
-            previousMonth: I18n.t("dates.previous_month"),
-            nextMonth: I18n.t("dates.next_month"),
-            months: moment.months(),
-            weekdays: moment.weekdays(),
-            weekdaysShort: moment.weekdaysMin(),
+            previousMonth: "ماه قبل",
+            nextMonth: "ماه بعد",
+            months: [
+              "فروردین",
+              "اردیبهشت",
+              "خرداد",
+              "تیر",
+              "مرداد",
+              "شهریرور",
+              "مهر",
+              "آبان",
+              "آذر",
+              "دی",
+              "بهمن",
+              "اسفند",
+            ],
+            weekdays: [
+              "یک‌شنبه",
+              "دو‌شنبه",
+              "سه‌‌شنبه",
+              "چهار‌شنبه",
+              "پنچ‌شنبه",
+              "‌جمعه",
+              "شنبه",
+            ],
+            weekdaysShort: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
           },
           onSelect: (date) => {
             const formattedDate = moment(date).format("YYYY-MM-DD");

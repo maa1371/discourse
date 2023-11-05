@@ -112,7 +112,7 @@ export default Component.extend({
     }
 
     this.setProperties({
-      customDate: parsedDatetime.format("YYYY-MM-DD"),
+      customDate: parsedDatetime.format("jYYYY-jMM-jDD"),
       customTime: parsedDatetime.format("HH:mm"),
       selectedShortcut: TIME_SHORTCUT_TYPES.CUSTOM,
     });
@@ -227,7 +227,7 @@ export default Component.extend({
       const defaultCustomDateTime = this._defaultCustomDateTime();
       this.set(
         "customDate",
-        this.customDate || defaultCustomDateTime.format("YYYY-MM-DD")
+        this.customDate || defaultCustomDateTime.format("jYYYY-jMM-jDD")
       );
       this.set(
         "customTime",

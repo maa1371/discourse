@@ -4,7 +4,7 @@ export default DatePicker.extend({
   _opts() {
     return {
       defaultDate:
-        moment(this.defaultDate, "YYYY-MM-DD").toDate() || new Date(),
+        moment(this.defaultDate, "jYYYY-jMM-jDD").toDate() || new Date(),
       setDefaultDate: !!this.defaultDate,
       maxDate: new Date(),
     };

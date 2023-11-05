@@ -15,6 +15,25 @@ function isInputDateSupported() {
   return input.value !== value;
 }
 
+function digits_fa2en(value) {
+  let newValue = "";
+  for (let i = 0; i < value.length; i++) {
+    let ch = value.charCodeAt(i);
+    if (ch >= 1776 && ch <= 1785) {
+      // For Persian digits.
+      let newChar = ch - 1728;
+      newValue = newValue + String.fromCharCode(newChar);
+    } else if (ch >= 1632 && ch <= 1641) {
+      // For Arabic & Unix digits.
+      let newChar_ = ch - 1584;
+      newValue = newValue + String.fromCharCode(newChar_);
+    } else {
+      newValue = newValue + String.fromCharCode(ch);
+    }
+  }
+  return newValue;
+}
+
 export default Component.extend({
   classNames: ["d-date-input"],
   date: null,
@@ -89,14 +108,36 @@ export default Component.extend({
         field: this.element.querySelector(".date-picker"),
         container: container || this.element.querySelector(".picker-container"),
         bound: container === null,
-        format: "LL",
-        firstDay: 1,
+        format: "jYYYY-jMM-jDD",
+        firstDay: 0,
+        isRTL: true,
         i18n: {
-          previousMonth: I18n.t("dates.previous_month"),
-          nextMonth: I18n.t("dates.next_month"),
-          months: moment.months(),
-          weekdays: moment.weekdays(),
-          weekdaysShort: moment.weekdaysShort(),
+          previousMonth: "ماه قبل",
+          nextMonth: "ماه بعد",
+          months: [
+            "فروردین",
+            "اردیبهشت",
+            "خرداد",
+            "تیر",
+            "مرداد",
+            "شهریرور",
+            "مهر",
+            "آبان",
+            "آذر",
+            "دی",
+            "بهمن",
+            "اسفند",
+          ],
+          weekdays: [
+            "یک‌شنبه",
+            "دو‌شنبه",
+            "سه‌‌شنبه",
+            "چهار‌شنبه",
+            "پنچ‌شنبه",
+            "‌جمعه",
+            "شنبه",
+          ],
+          weekdaysShort: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
         },
         onSelect: (date) => this._handleSelection(date),
       };
@@ -139,7 +180,16 @@ export default Component.extend({
     }
 
     if (this.onChange) {
-      this.onChange(value ? moment(value) : null);
+      if (value) {
+        let dateObj = new Date(value);
+        let momentObj = moment(dateObj);
+        let momentString = momentObj.format("YYYY-MM-DD"); // 2016-07-15
+        const formattedDate = digits_fa2en(momentString);
+        this.onChange(value ? formattedDate : null);
+      }
+      // else{
+      //   this.onChange(value ? formattedDate : null);
+      // }
     }
   },
 

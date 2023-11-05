@@ -37,11 +37,11 @@
         };
 
     var fa = moment.defineLocale('fa', {
-        months: 'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split(
+        months: 'فروردین_اردیبهشت_خرداد_تیر_مرداد_شهریور_مهر_آبان_آذر_دی_بهمن_اسفند'.split(
             '_'
         ),
         monthsShort:
-            'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split(
+            'فروردین_اردیبهشت_خرداد_تیر_مرداد_شهریور_مهر_آبان_آذر_دی_بهمن_اسفند'.split(
                 '_'
             ),
         weekdays:
@@ -57,10 +57,10 @@
         longDateFormat: {
             LT: 'HH:mm',
             LTS: 'HH:mm:ss',
-            L: 'DD/MM/YYYY',
-            LL: 'D MMMM YYYY',
-            LLL: 'D MMMM YYYY HH:mm',
-            LLLL: 'dddd, D MMMM YYYY HH:mm',
+            L: 'jDD/jMM/jYYYY',
+            LL: 'jD jMMMM jYYYY',
+            LLL: 'jD jMMMM jYYYY HH:mm',
+            LLLL: 'dddd, jD jMMMM jYYYY HH:mm',
         },
         meridiemParse: /قبل از ظهر|بعد از ظهر/,
         isPM: function (input) {

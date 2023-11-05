@@ -32,7 +32,7 @@ export default class WebhookEvent extends Component {
   }
 
   get createdAt() {
-    return moment(this.args.event.created_at).format("YYYY-MM-DD HH:mm:ss");
+    return moment(this.args.event.created_at).format("jYYYY-jMM-jDD HH:mm:ss");
   }
 
   get completion() {

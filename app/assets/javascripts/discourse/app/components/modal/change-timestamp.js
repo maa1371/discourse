@@ -10,12 +10,12 @@ import Topic from "discourse/models/topic";
 // Modal related to changing the timestamp of posts
 export default class ChangeTimestamp extends Component {
   @tracked saving = false;
-  @tracked date = moment().format("YYYY-MM-DD");
+  @tracked date = moment().format("jYYYY-jMM-jDD");
   @tracked time;
   @tracked flash;
 
   get createdAt() {
-    return moment(`${this.date} ${this.time}`, "YYYY-MM-DD HH:mm:ss");
+    return moment(`${this.date} ${this.time}`, "jYYYY-jMM-jDD HH:mm:ss");
   }
 
   get validTimestamp() {

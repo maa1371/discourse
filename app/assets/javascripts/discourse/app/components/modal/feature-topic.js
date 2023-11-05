@@ -99,7 +99,7 @@ export default class FeatureTopic extends Component {
   }
 
   _parseDate(date) {
-    return moment(date, ["YYYY-MM-DD", "YYYY-MM-DD HH:mm"]);
+    return moment(date, ["jYYYY-jMM-jDD", "jYYYY-jMM-jDD HH:mm"]);
   }
 
   _isDateValid(parsedDate) {

@@ -1363,7 +1363,7 @@ acceptance("Composer - current time", function (needs) {
     assert.ok(exists(".d-editor-input"), "the composer input is visible");
     await fillIn(".d-editor-input", "and the time now is: ");
 
-    const date = moment().format("YYYY-MM-DD");
+    const date = moment().format("jYYYY-jMM-jDD");
 
     await triggerKeyEvent(".d-editor-input", "keydown", ".", {
       ...metaModifier,

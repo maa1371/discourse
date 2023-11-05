@@ -16,6 +16,25 @@ export const DELETE_STATUS_TYPE = "delete";
 export const BUMP_TYPE = "bump";
 export const DELETE_REPLIES_TYPE = "delete_replies";
 
+function digits_fa2en(value) {
+  let newValue = "";
+  for (let i = 0; i < value.length; i++) {
+    let ch = value.charCodeAt(i);
+    if (ch >= 1776 && ch <= 1785) {
+      // For Persian digits.
+      let newChar = ch - 1728;
+      newValue = newValue + String.fromCharCode(newChar);
+    } else if (ch >= 1632 && ch <= 1641) {
+      // For Arabic & Unix digits.
+      let newChar_ = ch - 1584;
+      newValue = newValue + String.fromCharCode(newChar_);
+    } else {
+      newValue = newValue + String.fromCharCode(ch);
+    }
+  }
+  return newValue;
+}
+
 export default class EditTopicTimer extends Component {
   @service currentUser;
 
@@ -102,7 +121,13 @@ export default class EditTopicTimer extends Component {
 
   _setTimer(time, durationMinutes, statusType, basedOnLastPost, categoryId) {
     this.loading = true;
-
+    if (time != null) {
+      time = digits_fa2en(
+        moment(digits_fa2en(time), "jYYYY-jMM-jDD HH:mm").format(
+          "YYYY-MM-DD HH:mm:ss"
+        )
+      );
+    }
     TopicTimer.update(
       this.args.model.topic.id,
       time,
@@ -171,7 +196,6 @@ export default class EditTopicTimer extends Component {
   @action
   async saveTimer() {
     this.flash = null;
-
     if (!this.topicTimer.updateTime && !this.topicTimer.duration_minutes) {
       this.flash = I18n.t("topic.topic_status_update.time_frame_required");
       return;

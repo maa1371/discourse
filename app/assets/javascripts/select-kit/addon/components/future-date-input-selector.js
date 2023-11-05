@@ -2,6 +2,7 @@ import ComboBoxComponent from "select-kit/components/combo-box";
 import { equal } from "@ember/object/computed";
 import { isEmpty } from "@ember/utils";
 
+// export const FORMAT = "jYYYY-jMM-jDD HH:mmZ";
 export const FORMAT = "YYYY-MM-DD HH:mmZ";
 
 export default ComboBoxComponent.extend({
@@ -31,7 +32,7 @@ export default ComboBoxComponent.extend({
         const { time } = this.content.find((x) => x.id === value);
         if (time) {
           this.attrs.onChangeInput &&
-            this.attrs.onChangeInput(time.locale("en").format(FORMAT));
+            this.attrs.onChangeInput(time.locale("fa").format(FORMAT));
         }
       }
 

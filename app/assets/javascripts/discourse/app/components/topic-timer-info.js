@@ -106,7 +106,9 @@ export default Component.extend({
 
       options = Object.assign(options, this.additionalOpts());
       this.setProperties({
-        title: htmlSafe(`${moment(this.executeAt).format("LLLL")}`),
+        title: htmlSafe(
+          `${moment(this.executeAt).format("jYYYY/jMM/jDD HH:mm")}`
+        ),
         notice: htmlSafe(`${I18n.t(this._noticeKey(), options)}`),
         showTopicTimer: true,
       });

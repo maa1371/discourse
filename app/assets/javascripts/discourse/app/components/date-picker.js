@@ -5,7 +5,7 @@ import I18n from "I18n";
 import loadScript from "discourse/lib/load-script";
 import { schedule } from "@ember/runloop";
 
-const DATE_FORMAT = "YYYY-MM-DD";
+// const DATE_FORMAT = "jYYYY-jMM-jDD";
 
 export default Component.extend({
   classNames: ["date-picker-wrapper"],
@@ -34,14 +34,36 @@ export default Component.extend({
           field: this.element.querySelector(".date-picker"),
           container: container || null,
           bound: container === null,
-          format: DATE_FORMAT,
-          firstDay: 1,
+          format: "YYYY-MM-DD",
+          firstDay: 0,
+          isRTL: true,
           i18n: {
-            previousMonth: I18n.t("dates.previous_month"),
-            nextMonth: I18n.t("dates.next_month"),
-            months: moment.months(),
-            weekdays: moment.weekdays(),
-            weekdaysShort: moment.weekdaysMin(),
+            previousMonth: "ماه قبل",
+            nextMonth: "ماه بعد",
+            months: [
+              "فروردین",
+              "اردیبهشت",
+              "خرداد",
+              "تیر",
+              "مرداد",
+              "شهریرور",
+              "مهر",
+              "آبان",
+              "آذر",
+              "دی",
+              "بهمن",
+              "اسفند",
+            ],
+            weekdays: [
+              "یک‌شنبه",
+              "دو‌شنبه",
+              "سه‌‌شنبه",
+              "چهار‌شنبه",
+              "پنچ‌شنبه",
+              "‌جمعه",
+              "شنبه",
+            ],
+            weekdaysShort: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
           },
           onSelect: (date) => this._handleSelection(date),
         };
@@ -64,12 +86,11 @@ export default Component.extend({
   },
 
   _handleSelection(value) {
-    const formattedDate = moment(value).format(DATE_FORMAT);
-
+    this.set("value", moment(value.toString()).format("jYYYY-jMM-jDD"));
+    const formattedDate = moment(value.toString()).format("YYYY-MM-DD");
     if (!this.element || this.isDestroying || this.isDestroyed) {
       return;
     }
-
     if (this.onSelect) {
       this.onSelect(formattedDate);
     }

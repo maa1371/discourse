@@ -46,7 +46,7 @@ export default Component.extend({
       } else {
         this.setProperties({
           selection: TIME_SHORTCUT_TYPES.CUSTOM,
-          _date: dateTime.format("YYYY-MM-DD"),
+          _date: dateTime.format("jYYYY-jMM-jDD"),
           _time: dateTime.format("HH:mm"),
         });
       }
@@ -106,7 +106,6 @@ export default Component.extend({
   _dateTimeChanged(date, time) {
     time = time ? ` ${time}` : "";
     const dateTime = moment(`${date}${time}`);
-
     if (dateTime.isValid()) {
       this.onChangeInput?.(dateTime.format(FORMAT));
     } else {

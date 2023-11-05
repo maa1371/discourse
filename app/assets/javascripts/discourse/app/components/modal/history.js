@@ -150,7 +150,7 @@ export default class History extends Component {
   }
 
   get createdAtDate() {
-    return moment(this.postRevision.created_at).format("LLLL");
+    return moment(this.postRevision.created_at).format("jYYYY/jMM/jDD HH:mm");
   }
 
   get displayEdit() {

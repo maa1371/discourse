@@ -10,10 +10,27 @@ import ModalFunctionality from "discourse/mixins/modal-functionality";
 import Group from "discourse/models/group";
 import Invite from "discourse/models/invite";
 import I18n from "I18n";
-import { FORMAT } from "select-kit/components/future-date-input-selector";
+// import { FORMAT } from "select-kit/components/future-date-input-selector";
 import { sanitize } from "discourse/lib/text";
 import { timeShortcuts } from "discourse/lib/time-shortcut";
-
+function digits_fa2en(value) {
+  let newValue = "";
+  for (let i = 0; i < value.length; i++) {
+    let ch = value.charCodeAt(i);
+    if (ch >= 1776 && ch <= 1785) {
+      // For Persian digits.
+      let newChar = ch - 1728;
+      newValue = newValue + String.fromCharCode(newChar);
+    } else if (ch >= 1632 && ch <= 1641) {
+      // For Arabic & Unix digits.
+      let newChar_ = ch - 1584;
+      newValue = newValue + String.fromCharCode(newChar_);
+    } else {
+      newValue = newValue + String.fromCharCode(ch);
+    }
+  }
+  return newValue;
+}
 export default Controller.extend(
   ModalFunctionality,
   bufferedProperty("invite"),
@@ -66,7 +83,7 @@ export default Controller.extend(
         max_redemptions_allowed: 1,
         expires_at: moment()
           .add(this.siteSettings.invite_expiry_days, "days")
-          .format(FORMAT),
+          .format("YYYY-MM-DD HH:mm"),
       });
     },
 
@@ -80,7 +97,6 @@ export default Controller.extend(
 
     save(opts) {
       const data = { ...this.buffered.buffer };
-
       if (data.emailOrDomain) {
         if (emailValid(data.emailOrDomain)) {
           data.email = data.emailOrDomain?.trim();
@@ -119,12 +135,14 @@ export default Controller.extend(
           data.skip_email = true;
         }
       }
-
+      this.buffered.setProperties({
+        expires_at: data.expires_at,
+      });
+      data.expires_at = digits_fa2en(data.expires_at);
       return this.invite
         .save(data)
         .then(() => {
           this.rollbackBuffer();
-
           if (
             this.invites &&
             !this.invites.any((i) => i.id === this.invite.id)
@@ -163,10 +181,9 @@ export default Controller.extend(
     @discourseComputed("buffered.expires_at")
     expiresAtLabel(expires_at) {
       const expiresAt = moment(expires_at);
-
       return expiresAt.isBefore()
         ? I18n.t("user.invited.invite.expired_at_time", {
-            time: expiresAt.format("LLL"),
+            time: expiresAt.format("jYYYY-jMM-jDD"),
           })
         : I18n.t("user.invited.invite.expires_in_time", {
             time: moment.duration(expiresAt - moment()).humanize(),

@@ -77,13 +77,12 @@ export default class AdminReport extends Component {
 
     let startDate = moment();
     if (this.filters && isPresent(this.filters.startDate)) {
-      startDate = moment(this.filters.startDate, "YYYY-MM-DD");
+      startDate = moment(this.filters.startDate);
     }
     this.set("startDate", startDate);
-
     let endDate = moment();
     if (this.filters && isPresent(this.filters.endDate)) {
-      endDate = moment(this.filters.endDate, "YYYY-MM-DD");
+      endDate = moment(this.filters.endDate);
     }
     this.set("endDate", endDate);
 
